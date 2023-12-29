@@ -10,7 +10,24 @@ export default async function Home({
     maxAge?: string;
   };
 }) {
-  const data = await db.cat.findMany();
+  const data = await db.cat.findMany({
+    where: {
+      AND: [
+        {
+          name: {
+            contains: searchParams.name || undefined,
+            mode: "insensitive",
+          },
+        },
+        {
+          age: {
+            gte: Number(searchParams.minAge) || undefined,
+            lte: Number(searchParams.maxAge) || undefined,
+          },
+        },
+      ],
+    },
+  });
 
   return (
     <main>
