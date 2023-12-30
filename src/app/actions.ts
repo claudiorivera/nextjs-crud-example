@@ -20,7 +20,7 @@ export async function createCat(_initialState: unknown, formData: FormData) {
   });
 
   if (cat) {
-    throw redirect("/");
+    redirect("/");
   }
 }
 
@@ -43,7 +43,7 @@ export async function updateCat(_initialState: unknown, formData: FormData) {
   });
 
   if (updatedCat) {
-    throw redirect("/");
+    redirect("/");
   }
 }
 
@@ -55,6 +55,6 @@ export async function deleteCat(id: string) {
   });
 
   if (cat) {
-    return redirect("/");
+    redirect("/");
   }
 }
