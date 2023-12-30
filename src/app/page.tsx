@@ -1,4 +1,4 @@
-import { deleteCat } from "~/src/app/actions";
+import { redirect } from "next/navigation";
 import { db } from "~/src/lib/db";
 
 export default async function Home({
@@ -28,6 +28,19 @@ export default async function Home({
       ],
     },
   });
+
+  async function deleteCat(id: string) {
+    "use server";
+    const cat = await db.cat.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (cat) {
+      redirect("/");
+    }
+  }
 
   return (
     <main>

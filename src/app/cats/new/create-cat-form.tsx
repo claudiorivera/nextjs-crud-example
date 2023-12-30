@@ -1,9 +1,16 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { createCat } from "~/src/app/actions";
+import { FormState } from "~/src/types";
 
-export function CreateCatForm() {
+export function CreateCatForm({
+  createCat,
+}: {
+  createCat: (
+    _initialState: FormState,
+    formData: FormData
+  ) => Promise<FormState>;
+}) {
   const [state, formAction] = useFormState(createCat, undefined);
 
   return (

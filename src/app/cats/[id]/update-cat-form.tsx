@@ -2,14 +2,22 @@
 
 import { Cat } from "@prisma/client";
 import { useFormState } from "react-dom";
-import { updateCat } from "~/src/app/actions";
+import { FormState } from "~/src/types";
 
-export function UpdateCatForm({ cat }: { cat: Cat }) {
+export function UpdateCatForm({
+  cat,
+  updateCat,
+}: {
+  cat: Cat;
+  updateCat: (
+    _initialState: FormState,
+    formData: FormData
+  ) => Promise<FormState>;
+}) {
   const [state, formAction] = useFormState(updateCat, undefined);
 
   return (
     <form action={formAction}>
-      <input type="hidden" name="id" defaultValue={cat.id} />
       <div>
         <label>
           Name
