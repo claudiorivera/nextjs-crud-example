@@ -9,8 +9,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <nav>
-          <Link href="/">All Cats</Link>
-          <Link href="/cats/new">New Cat</Link>
+          <Link href="/">Home</Link>
         </nav>
         {children}
       </body>

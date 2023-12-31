@@ -1,5 +1,8 @@
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { CreateCatForm } from "~/src/app/create-cat-form";
+import { catSchema } from "~/src/lib/createCatSchema";
 import { db } from "~/src/lib/db";
+import { FormState } from "~/src/types";
 
 export default async function Home({
   searchParams,
@@ -38,13 +41,38 @@ export default async function Home({
     });
 
     if (cat) {
-      redirect("/");
+      revalidatePath("/");
+    }
+  }
+
+  async function createCat(_initialState: FormState, formData: FormData) {
+    "use server";
+    const entries = Object.fromEntries(formData.entries());
+
+    const validation = catSchema.safeParse(entries);
+
+    if (!validation.success)
+      return {
+        fieldErrors: validation.error.flatten().fieldErrors,
+        formErrors: validation.error.flatten().formErrors,
+      };
+
+    const cat = await db.cat.create({
+      data: validation.data,
+    });
+
+    if (cat) {
+      revalidatePath("/");
     }
   }
 
   return (
     <main>
-      <h1>All Cats</h1>
+      <h1>Home</h1>
+
+      <hr />
+
+      <h2>Search Cats</h2>
       <form>
         <label>
           Name
@@ -72,6 +100,7 @@ export default async function Home({
         <button>Search</button>
       </form>
 
+      <h3>Results</h3>
       <table>
         <thead>
           <tr>
@@ -96,6 +125,11 @@ export default async function Home({
           ))}
         </tbody>
       </table>
+
+      <hr />
+
+      <h2>New Cat</h2>
+      <CreateCatForm createCat={createCat} />
     </main>
   );
 }

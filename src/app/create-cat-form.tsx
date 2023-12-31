@@ -30,7 +30,7 @@ export function CreateCatForm({
         </label>
       </div>
 
-      <button>Save Changes</button>
+      <button>Add New Cat</button>
     </form>
   );
 }
