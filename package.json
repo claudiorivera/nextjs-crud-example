@@ -7,7 +7,8 @@
     "build": "prisma migrate deploy && next build",
     "db:push": "prisma db push",
     "start": "next start",
-    "lint": "next lint",
+    "check:fix": "bunx @biomejs/biome check --apply src",
+		"typecheck": "tsc --noEmit",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -18,11 +19,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.0",
     "prisma": "^5.7.1",
     "typescript": "^5"
   }
