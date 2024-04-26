@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { UpdateCatForm } from "~/src/app/cats/[id]/update-cat-form";
 import { catSchema } from "~/src/lib/createCatSchema";
 import { db } from "~/src/lib/db";
-import { FormState } from "~/src/types";
+import type { FormState } from "~/src/types";
 
 export default async function Cat({ params }: { params: { id: string } }) {
 	const cat = await db.cat.findUniqueOrThrow({

@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { CreateCatForm } from "~/src/app/create-cat-form";
 import { catSchema } from "~/src/lib/createCatSchema";
 import { db } from "~/src/lib/db";
-import { FormState } from "~/src/types";
+import type { FormState } from "~/src/types";
 
 export default async function Home({
 	searchParams,

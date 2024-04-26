@@ -1,10 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-declare global {
-	// biome-ignore lint/style/noVar: https://github.com/biomejs/biome/pull/1669
-	var prisma: PrismaClient | undefined;
-}
+const globalForPrisma = globalThis as unknown as {
+	db: PrismaClient | undefined;
+};
 
-if (process.env.NODE_ENV === "development") global.prisma = prisma;
+export const db =
+	globalForPrisma.db ??
+	new PrismaClient({
+		log:
+			process.env.NODE_ENV === "development"
+				? ["query", "error", "warn"]
+				: ["error"],
+	});
 
-export const db = global.prisma || new PrismaClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.db = db;

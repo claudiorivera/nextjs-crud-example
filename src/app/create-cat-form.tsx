@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { FormState } from "~/src/types";
+import type { FormState } from "~/src/types";
 
 export function CreateCatForm({
 	createCat,
